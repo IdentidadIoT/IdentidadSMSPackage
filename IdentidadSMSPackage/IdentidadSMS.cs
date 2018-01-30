@@ -221,7 +221,7 @@ namespace IdentidadSMSPackage
         /// <returns></returns>
         private IdentidadSmsResponse Mapper(IRestResponse restResponse)
         {
-            return new IdentidadSmsResponse()
+            return new IdentidadSmsResponse(restResponse.IsSuccessful, restResponse.Headers)
             {
                 Content = restResponse.Content,
                 ContentEncoding = restResponse.ContentEncoding,
