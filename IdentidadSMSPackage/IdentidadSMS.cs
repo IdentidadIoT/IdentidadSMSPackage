@@ -107,7 +107,7 @@ namespace IdentidadSMSPackage
             RestClient client = new RestClient(Constant.URL_API_REST_ACCOUNT);
             string credentials = Convert.ToBase64String(Encoding.GetEncoding("ISO-8859-1").GetBytes(username + ":" + password));
             RestRequest request = new RestRequest(Method.GET);
-            request.AddHeader("Authorization", $@"Basic {credentials}");
+            request.AddHeader("Authorization", string.Format("Basic {0}", credentials));
             IRestResponse<List<Account>> response = client.Execute<List<Account>>(request);
 
             return response;
@@ -124,7 +124,7 @@ namespace IdentidadSMSPackage
             RestClient client = new RestClient(Constant.URL_API_REST_AUTH);
             string credentials = Convert.ToBase64String(Encoding.GetEncoding("ISO-8859-1").GetBytes(username + ":" + password));
             RestRequest request = new RestRequest(Method.GET);
-            request.AddHeader("Authorization", $@"Basic {credentials}");
+            request.AddHeader("Authorization", string.Format("Basic {0}", credentials));
             IRestResponse<Dictionary<string, string>> response = client.Execute<Dictionary<string, string>>(request);
 
             return response;
@@ -147,7 +147,7 @@ namespace IdentidadSMSPackage
                 IRestResponse<List<Account>> accountResponse = GetAccount(Username, Password);
 
                 if (accountResponse.StatusCode == HttpStatusCode.OK)
-                    acc_id = accountResponse.Data.FirstOrDefault().id;
+                    acc_id = accountResponse.Data[0].id;
                 else
                     return Mapper(accountResponse);
 
@@ -186,7 +186,7 @@ namespace IdentidadSMSPackage
             RestRequest request = new RestRequest(Method.POST);
             request.AddHeader("content-type", "application/x-www-form-urlencoded");
             request.AddHeader("authorization", $@"Bearer {token}");
-            var postData = $@"acc_id={acc_id}&to={to}&from={from}&message={message}";
+            string postData = string.Format("acc_id={0}&to={1}&from={2}&message={3}", acc_id, to, from, message);
             request.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
 
@@ -205,10 +205,10 @@ namespace IdentidadSMSPackage
             DateTime startDate = sendDate.AddDays(-1);
             DateTime endDate = sendDate.AddDays(1);
 
-            string baseUrl = $@"{Constant.URL_API_REST_SMSEDR}?client_message_id={messsageId}&start_date={startDate.ToString("yyyy-MM-dd")}&end_date={endDate.ToString("yyyy-MM-dd")}";
+            string baseUrl = string.Format("{0}?client_message_id={1}&start_date={2}&end_date={3}", Constant.URL_API_REST_SMSEDR, messsageId, startDate.ToString("yyyy-MM-dd"), endDate.ToString("yyyy-MM-dd"));
             RestClient client = new RestClient(baseUrl);
             RestRequest request = new RestRequest(Method.GET);
-            request.AddHeader("Authorization", $@"Bearer {token}");
+            request.AddHeader("Authorization", string.Format("Bearer {0}", token));
             IRestResponse response = client.Execute(request);
 
             return response;
@@ -228,7 +228,6 @@ namespace IdentidadSMSPackage
                 ContentLength = restResponse.ContentLength,
                 ContentType = restResponse.ContentType,
                 ErrorException = restResponse.ErrorException,
-                ProtocolVersion = restResponse.ProtocolVersion,
                 ErrorMessage = restResponse.ErrorMessage,
                 RawBytes = restResponse.RawBytes,
                 Request = restResponse.Request,
@@ -249,10 +248,10 @@ namespace IdentidadSMSPackage
         private string ConvertParamsToString(string[] texstList, string charcter)
         {
             string text = string.Empty;
-            texstList.ToList().ForEach(cell =>
+            foreach (string cell in texstList)
             {
                 text += cell + charcter;
-            });
+            }
 
             text = text.Remove(text.Length - 1);
             return text;
