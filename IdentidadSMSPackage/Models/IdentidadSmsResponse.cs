@@ -20,11 +20,9 @@ namespace IdentidadSMSPackage.Models
         /// <summary>
         /// Creating an Instance of IdentidadSmsResponse Class
         /// </summary>
-        /// <param name="isSuccessful"></param>
         /// <param name="headers"></param>
-        public IdentidadSmsResponse(bool isSuccessful, IList<Parameter> headers)
+        public IdentidadSmsResponse(IList<Parameter> headers)
         {
-            IsSuccessful = isSuccessful;
             Headers = headers;
         }
 
@@ -62,12 +60,7 @@ namespace IdentidadSMSPackage.Models
         /// HTTP Status Code of the response
         /// </summary>
         public HttpStatusCode StatusCode { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public bool IsSuccessful { get; }
-
+        
         /// <summary>
         /// Status Description
         /// </summary>
