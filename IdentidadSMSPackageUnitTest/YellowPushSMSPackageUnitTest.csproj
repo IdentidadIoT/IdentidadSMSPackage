@@ -7,8 +7,8 @@
     <ProjectGuid>{34204AFC-FC72-4E3B-A938-47DDE6FE3271}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>IdentidadSMSPackageUnitTest</RootNamespace>
-    <AssemblyName>IdentidadSMSPackageUnitTest</AssemblyName>
+    <RootNamespace>YellowPushSMSPackageUnitTest</RootNamespace>
+    <AssemblyName>YellowPushSMSPackageUnitTest</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -53,16 +53,16 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IdentidadSMSUnitTest.cs" />
+    <Compile Include="YellowPushSMSUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\IdentidadSMSPackage\IdentidadSMSPackage.csproj">
+    <ProjectReference Include="..\IdentidadSMSPackage\YellowPushSMSPackage.csproj">
       <Project>{c9d942e6-cef9-4d45-8359-c20985f8ddac}</Project>
-      <Name>IdentidadSMSPackage</Name>
+      <Name>YellowPushSMSPackage</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

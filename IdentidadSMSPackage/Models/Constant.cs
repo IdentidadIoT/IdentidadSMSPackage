@@ -1,4 +1,4 @@
-﻿namespace IdentidadSMSPackage.Models
+﻿namespace YellowPushSMSPackage.Models
 {
     /// <summary>
     /// Constans of the system

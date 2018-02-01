@@ -1,4 +1,4 @@
-﻿namespace IdentidadSMSPackage.Models
+﻿namespace YellowPushSMSPackage.Models
 {
     /// <summary>
     /// Object Response of the Alaris API

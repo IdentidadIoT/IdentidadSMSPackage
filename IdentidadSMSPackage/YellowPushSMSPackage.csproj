@@ -7,8 +7,8 @@
     <ProjectGuid>{C9D942E6-CEF9-4D45-8359-C20985F8DDAC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>IdentidadSMSPackage</RootNamespace>
-    <AssemblyName>IdentidadSMSPackage</AssemblyName>
+    <RootNamespace>YellowPushSMSPackage</RootNamespace>
+    <AssemblyName>YellowPushSMSPackage</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -21,7 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\IdentidadSMSPackage.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\YellowPushSMSPackage.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,7 +30,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\IdentidadSMSPackage.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\YellowPushSMSPackage.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
@@ -41,10 +41,10 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IdentidadSMS.cs" />
+    <Compile Include="YellowPushSMS.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Constant.cs" />
-    <Compile Include="Models\IdentidadSmsResponse.cs" />
+    <Compile Include="Models\YellowPushSMSResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

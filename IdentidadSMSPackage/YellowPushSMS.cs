@@ -1,4 +1,4 @@
-﻿using IdentidadSMSPackage.Models;
+﻿using YellowPushSMSPackage.Models;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -6,12 +6,12 @@ using System.Linq;
 using System.Net;
 using System.Text;
 
-namespace IdentidadSMSPackage
+namespace YellowPushSMSPackage
 {
     /// <summary>
-    /// IdentidadSMS Class
+    /// YellowPushSMS Class
     /// </summary>
-    public class IdentidadSMS
+    public class YellowPushSMS
     {
         /// <summary>
         /// Username registered in the system
@@ -24,11 +24,11 @@ namespace IdentidadSMSPackage
         public string Password { get; }
 
         /// <summary>
-        /// Creating an Instance of IdentidadSMS Class
+        /// Creating an Instance of YellowPushSMS Class
         /// </summary>
         /// <param name="username">Username registered in the system</param>
         /// <param name="password">Password associated with the user in the system</param>
-        public IdentidadSMS(string username, string password)
+        public YellowPushSMS(string username, string password)
         {
             this.Username = username;
             this.Password = password;
@@ -42,10 +42,10 @@ namespace IdentidadSMSPackage
         /// <param name="message">Text message</param>
         /// <param name="cellphoneNumbers">Mobile numbers to send the text message(The mobile number must also include the country code)</param>
         /// <returns></returns>
-        public IdentidadSmsResponse SendSms(string from, string message, params string[] cellphoneNumbers)
+        public YellowPushSMSResponse SendSms(string from, string message, params string[] cellphoneNumbers)
         {
             string to = ConvertParamsToString(cellphoneNumbers, ",");
-            IdentidadSmsResponse response = SendMessage(from, message, to);
+            YellowPushSMSResponse response = SendMessage(from, message, to);
             return response;
         }
 
@@ -56,9 +56,9 @@ namespace IdentidadSMSPackage
         /// <param name="message">Text message</param>
         /// <param name="cellphoneNumbers">Mobile numbers separated by commas to send the text message(The mobile number must also include the country code)</param>
         /// <returns></returns>
-        public IdentidadSmsResponse SendSms(string from, string message, string cellphoneNumbers)
+        public YellowPushSMSResponse SendSms(string from, string message, string cellphoneNumbers)
         {
-            IdentidadSmsResponse response = SendMessage(from, message, cellphoneNumbers);
+            YellowPushSMSResponse response = SendMessage(from, message, cellphoneNumbers);
             return response;
         }
 
@@ -68,7 +68,7 @@ namespace IdentidadSMSPackage
         /// <param name="messsageId">Message identifier</param>
         /// <param name="sendDate">Date of dispatch the message</param>
         /// <returns></returns>
-        public IdentidadSmsResponse GetMessageStatus(string messsageId, DateTime sendDate)
+        public YellowPushSMSResponse GetMessageStatus(string messsageId, DateTime sendDate)
         {
             string token = string.Empty;
 
@@ -87,7 +87,7 @@ namespace IdentidadSMSPackage
             }
             catch (Exception ex)
             {
-                return new IdentidadSmsResponse
+                return new YellowPushSMSResponse
                 {
                     StatusCode = HttpStatusCode.InternalServerError,
                     ErrorMessage = ex.Message
@@ -137,7 +137,7 @@ namespace IdentidadSMSPackage
         /// <param name="message">Text message</param>
         /// <param name="to">Mobile numbers separated by commas to send the text message(The mobile number must also include the country code)</param>
         /// <returns></returns>
-        private IdentidadSmsResponse SendMessage(string from, string message, string to)
+        private YellowPushSMSResponse SendMessage(string from, string message, string to)
         {
             try
             {
@@ -163,7 +163,7 @@ namespace IdentidadSMSPackage
             }
             catch (Exception ex)
             {
-                return new IdentidadSmsResponse
+                return new YellowPushSMSResponse
                 {
                     StatusCode = HttpStatusCode.InternalServerError,
                     ErrorMessage = ex.Message
@@ -219,9 +219,9 @@ namespace IdentidadSMSPackage
         /// </summary>
         /// <param name="restResponse">Type IRestResponse object to map</param>
         /// <returns></returns>
-        private IdentidadSmsResponse Mapper(IRestResponse restResponse)
+        private YellowPushSMSResponse Mapper(IRestResponse restResponse)
         {
-            return new IdentidadSmsResponse(restResponse.Headers)
+            return new YellowPushSMSResponse(restResponse.Headers)
             {
                 Content = restResponse.Content,
                 ContentEncoding = restResponse.ContentEncoding,

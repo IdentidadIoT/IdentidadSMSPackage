@@ -6,12 +6,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("IdentidadSMSPackage")]
+[assembly: AssemblyTitle("YellowPushSMSPackage")]
 [assembly: AssemblyDescription("Component to send the text message")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Identidad SMS")]
-[assembly: AssemblyProduct("IdentidadSMSPackage")]
-[assembly: AssemblyCopyright("Copyright ©  2018 Identidad SMS")]
+[assembly: AssemblyCompany("YellowPush")]
+[assembly: AssemblyProduct("YellowPushSMSPackage")]
+[assembly: AssemblyCopyright("Copyright ©  2018 YellowPush")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
