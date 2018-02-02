@@ -3,26 +3,26 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 
-namespace IdentidadSMSPackage.Models
+namespace YellowPushSMSPackage.Models
 {
     /// <summary>
     /// Object Response 
     /// </summary>
-    public class IdentidadSmsResponse : IRestResponse
+    public class YellowPushSMSResponse : IRestResponse
     {
         /// <summary>
-        /// Creating an Instance of IdentidadSmsResponse Class
+        /// Creating an Instance of YellowPushSMSResponse Class
         /// </summary>
-        public IdentidadSmsResponse()
+        public YellowPushSMSResponse()
         {
         }
 
         /// <summary>
-        /// Creating an Instance of IdentidadSmsResponse Class
+        /// Creating an Instance of YellowPushSMSResponse Class
         /// </summary>
         /// <param name="isSuccessful"></param>
         /// <param name="headers"></param>
-        public IdentidadSmsResponse(bool isSuccessful, IList<Parameter> headers)
+        public YellowPushSMSResponse(bool isSuccessful, IList<Parameter> headers)
         {
             IsSuccessful = isSuccessful;
             Headers = headers;
