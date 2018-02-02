@@ -63,7 +63,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\IdentidadSMSPackage\YellowPushSMSPackage.csproj">
+    <ProjectReference Include="..\YellowPushSMSPackage\YellowPushSMSPackage.csproj">
       <Project>{c9d942e6-cef9-4d45-8359-c20985f8ddac}</Project>
       <Name>YellowPushSMSPackage</Name>
     </ProjectReference>
