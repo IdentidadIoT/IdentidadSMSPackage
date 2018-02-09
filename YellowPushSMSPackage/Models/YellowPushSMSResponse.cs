@@ -11,14 +11,14 @@ namespace YellowPushSMSPackage.Models
     public class YellowPushSMSResponse : IRestResponse
     {
         /// <summary>
-        /// Creating an Instance of YellowPushSMSResponse Class
+        /// Creates an instance Instance of YellowPushSMSResponse Class
         /// </summary>
         public YellowPushSMSResponse()
         {
         }
 
         /// <summary>
-        /// Creating an Instance of YellowPushSMSResponse Class
+        /// Creates an instance of YellowPushSMSResponse Class
         /// </summary>
         /// <param name="headers"></param>
         public YellowPushSMSResponse(IList<Parameter> headers)
@@ -80,8 +80,7 @@ namespace YellowPushSMSPackage.Models
         /// Server
         /// </summary>
         public string Server { get; set; }
-
-
+        
         /// <summary>
         /// Cookies
         /// </summary>
