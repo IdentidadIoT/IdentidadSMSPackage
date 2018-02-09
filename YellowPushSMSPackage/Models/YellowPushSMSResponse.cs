@@ -11,14 +11,14 @@ namespace YellowPushSMSPackage.Models
     public class YellowPushSMSResponse : IRestResponse
     {
         /// <summary>
-        /// Creating an Instance of YellowPushSMSResponse Class
+        /// Creates an instance of YellowPushSMSResponse Class
         /// </summary>
         public YellowPushSMSResponse()
         {
         }
 
         /// <summary>
-        /// Creating an Instance of YellowPushSMSResponse Class
+        /// Creates an instance of YellowPushSMSResponse Class
         /// </summary>
         /// <param name="isSuccessful"></param>
         /// <param name="headers"></param>

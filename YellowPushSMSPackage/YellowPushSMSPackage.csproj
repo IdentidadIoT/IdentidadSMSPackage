@@ -53,7 +53,7 @@
     <Compile Include="YellowPushSMS.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Constant.cs" />
-    <Compile Include="Models\IdentidadSmsResponse.cs" />
+    <Compile Include="Models\YellowPushSMSResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
