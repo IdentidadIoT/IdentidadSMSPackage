@@ -3,7 +3,7 @@
     /// <summary>
     /// Constans of the system
     /// </summary>
-    public static class Constant
+    internal static class Constant
     {
         /// <summary>
         /// URI REST ACCOUNT
