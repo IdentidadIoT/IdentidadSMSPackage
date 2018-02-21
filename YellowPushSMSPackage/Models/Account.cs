@@ -3,7 +3,7 @@
     /// <summary>
     /// Object Response of the Alaris API
     /// </summary>
-    public class Account
+    internal class Account
     {
         /// <summary>
         /// Account ID
