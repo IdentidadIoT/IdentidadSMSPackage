@@ -1,27 +1,27 @@
-﻿using RestSharp;
-using System;
-using System.Collections.Generic;
-using System.Net;
-
-namespace YellowPushSMSPackage.Models
+﻿namespace YellowPushSMSPackage.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Net;
+    using RestSharp;
+
     /// <summary>
-    /// Object Response 
+    /// Object Response
     /// </summary>
     public class YellowPushSMSResponse : IRestResponse
     {
         /// <summary>
-        /// Creates an instance of YellowPushSMSResponse Class
+        /// Initializes a new instance of the <see cref="YellowPushSMSResponse"/> class.
         /// </summary>
         public YellowPushSMSResponse()
         {
         }
 
         /// <summary>
-        /// Creates an instance of YellowPushSMSResponse Class
+        /// Initializes a new instance of the <see cref="YellowPushSMSResponse"/> class.
         /// </summary>
-        /// <param name="isSuccessful"></param>
-        /// <param name="headers"></param>
+        /// <param name="isSuccessful">if set to <c>true</c> [is successful].</param>
+        /// <param name="headers">The headers.</param>
         public YellowPushSMSResponse(bool isSuccessful, IList<Parameter> headers)
         {
             IsSuccessful = isSuccessful;
@@ -29,95 +29,147 @@ namespace YellowPushSMSPackage.Models
         }
 
         /// <summary>
-        /// 
+        /// Gets or sets my property.
         /// </summary>
+        /// <value>
+        /// My property.
+        /// </value>
         public int MyProperty { get; set; }
 
         /// <summary>
-        /// API Request
+        /// Gets or sets the request.
         /// </summary>
+        /// <value>
+        /// The request.
+        /// </value>
         public IRestRequest Request { get; set; }
 
         /// <summary>
-        /// Content Type of the request
+        /// Gets or sets the type of the content.
         /// </summary>
+        /// <value>
+        /// The type of the content.
+        /// </value>
         public string ContentType { get; set; }
 
         /// <summary>
-        /// Content Length of the request
+        /// Gets or sets the length of the content.
         /// </summary>
+        /// <value>
+        /// The length of the content.
+        /// </value>
         public long ContentLength { get; set; }
 
         /// <summary>
-        /// Content Encoding of the request
+        /// Gets or sets the content encoding.
         /// </summary>
+        /// <value>
+        /// The content encoding.
+        /// </value>
         public string ContentEncoding { get; set; }
 
         /// <summary>
-        /// Content of the response
+        /// Gets or sets the content.
         /// </summary>
+        /// <value>
+        /// The content.
+        /// </value>
         public string Content { get; set; }
 
         /// <summary>
-        /// HTTP Status Code of the response
+        /// Gets or sets the status code.
         /// </summary>
+        /// <value>
+        /// The status code.
+        /// </value>
         public HttpStatusCode StatusCode { get; set; }
 
         /// <summary>
-        /// 
+        /// Gets a value indicating whether this instance is successful.
         /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is successful; otherwise, <c>false</c>.
+        /// </value>
         public bool IsSuccessful { get; }
 
         /// <summary>
-        /// Status Description
+        /// Gets or sets the status description.
         /// </summary>
+        /// <value>
+        /// The status description.
+        /// </value>
         public string StatusDescription { get; set; }
 
         /// <summary>
-        /// 
+        /// Gets or sets the raw bytes.
         /// </summary>
+        /// <value>
+        /// The raw bytes.
+        /// </value>
         public byte[] RawBytes { get; set; }
 
         /// <summary>
-        /// Response Uri
+        /// Gets or sets the response URI.
         /// </summary>
+        /// <value>
+        /// The response URI.
+        /// </value>
         public Uri ResponseUri { get; set; }
 
         /// <summary>
-        /// Server
+        /// Gets or sets the server.
         /// </summary>
+        /// <value>
+        /// The server.
+        /// </value>
         public string Server { get; set; }
 
-
         /// <summary>
-        /// Cookies
+        /// Gets the cookies.
         /// </summary>
+        /// <value>
+        /// The cookies.
+        /// </value>
         public IList<RestResponseCookie> Cookies { get; }
 
         /// <summary>
-        /// Headers of the response
+        /// Gets the headers.
         /// </summary>
+        /// <value>
+        /// The headers.
+        /// </value>
         public IList<Parameter> Headers { get; }
 
         /// <summary>
-        /// Response Status
+        /// Gets or sets the response status.
         /// </summary>
+        /// <value>
+        /// The response status.
+        /// </value>
         public ResponseStatus ResponseStatus { get; set; }
 
         /// <summary>
-        /// Error Message
+        /// Gets or sets the error message.
         /// </summary>
+        /// <value>
+        /// The error message.
+        /// </value>
         public string ErrorMessage { get; set; }
 
         /// <summary>
-        /// Error Exception
+        /// Gets or sets the error exception.
         /// </summary>
+        /// <value>
+        /// The error exception.
+        /// </value>
         public Exception ErrorException { get; set; }
 
         /// <summary>
-        /// Protocol Version
+        /// Gets or sets the protocol version.
         /// </summary>
+        /// <value>
+        /// The protocol version.
+        /// </value>
         public Version ProtocolVersion { get; set; }
-
     }
 }
