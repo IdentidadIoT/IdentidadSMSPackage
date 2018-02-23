@@ -13,17 +13,17 @@
     public class YellowPushSMSUnitTest
     {
         /// <summary>
+        /// The SMS
+        /// </summary>
+        private YellowPushSMS sms;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="YellowPushSMSUnitTest"/> class.
         /// </summary>
         public YellowPushSMSUnitTest()
         {
             sms = new YellowPushSMS("prueda@identidadtelecom.net", "Ruedamillos1991");
         }
-
-        /// <summary>
-        /// The SMS
-        /// </summary>
-        private YellowPushSMS sms;
 
         /// <summary>
         /// Sends the SMS.
