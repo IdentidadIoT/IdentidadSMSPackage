@@ -1,43 +1,64 @@
 ﻿namespace YellowPushSMSPackage.Models
 {
     /// <summary>
-    /// Object Response of the Alaris API
+    /// Account Class
     /// </summary>
     internal class Account
     {
         /// <summary>
-        /// Account ID
+        /// Gets or sets the identifier.
         /// </summary>
-        public string id { get; set; }
+        /// <value>
+        /// The identifier.
+        /// </value>
+        public string Id { get; set; }
 
         /// <summary>
-        /// Carrier ID 
+        /// Gets or sets the car identifier.
         /// </summary>
-        public string car_id { get; set; }
+        /// <value>
+        /// The car identifier.
+        /// </value>
+        public string Car_id { get; set; }
 
         /// <summary>
-        /// Balance updated date
+        /// Gets or sets the balance updated.
         /// </summary>
-        public string balance_updated { get; set; }
+        /// <value>
+        /// The balance updated.
+        /// </value>
+        public string Balance_updated { get; set; }
 
         /// <summary>
-        /// Currency code
+        /// Gets or sets the currency code.
         /// </summary>
-        public string currency_code { get; set; }
+        /// <value>
+        /// The currency code.
+        /// </value>
+        public string Currency_code { get; set; }
 
         /// <summary>
-        /// Balance 
+        /// Gets or sets the balance.
         /// </summary>
-        public string balance { get; set; }
+        /// <value>
+        /// The balance.
+        /// </value>
+        public string Balance { get; set; }
 
         /// <summary>
-        /// Client credit limit. Unlimited credit limit (null value in agreement) displayed as 99999999999 
+        /// Gets or sets the in credit limit.
         /// </summary>
-        public string in_credit_limit { get; set; }
+        /// <value>
+        /// The in credit limit.
+        /// </value>
+        public string In_credit_limit { get; set; }
 
         /// <summary>
-        /// Send balance alerts ([1] - send, 0 - do not send) 
+        /// Gets or sets the acc send balance alerts.
         /// </summary>
-        public string acc_send_balance_alerts { get; set; }
+        /// <value>
+        /// The acc send balance alerts.
+        /// </value>
+        public string Acc_send_balance_alerts { get; set; }
     }
 }

@@ -1,46 +1,51 @@
-﻿using RestSharp;
-using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Text;
-using YellowPushSMSPackage.Models;
-
-namespace YellowPushSMSPackage
+﻿namespace YellowPushSMSPackage
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Net;
+    using System.Text;
+    using RestSharp;
+    using YellowPushSMSPackage.Models;
+
     /// <summary>
     /// YellowPushSMS Class
     /// </summary>
     public class YellowPushSMS
     {
         /// <summary>
-        /// Username registered in the system
-        /// </summary> 
-        public string Username { get; }
-
-        /// <summary>
-        /// The password associated with the user in the system
+        /// Initializes a new instance of the <see cref="YellowPushSMS"/> class.
         /// </summary>
-        public string Password { get; }
-
-        /// <summary>
-        /// Creates an instance of YellowPushSMS Class
-        /// </summary>
-        /// <param name="username">Username registered in the system</param>
-        /// <param name="password">The password associated with the user in the system</param>
+        /// <param name="username">The username.</param>
+        /// <param name="password">The password.</param>
         public YellowPushSMS(string username, string password)
         {
             this.Username = username;
             this.Password = password;
-            
         }
 
         /// <summary>
-        /// The method sends the text message
-        /// </summary>      
-        /// <param name="from">Sender name</param>
-        /// <param name="message">Text message</param>
-        /// <param name="cellphoneNumbers">Mobile numbers to send the text message (The mobile number must also include the country code)</param>
-        /// <returns></returns>
+        /// Gets the username.
+        /// </summary>
+        /// <value>
+        /// The username.
+        /// </value>
+        public string Username { get; }
+
+        /// <summary>
+        /// Gets the password.
+        /// </summary>
+        /// <value>
+        /// The password.
+        /// </value>
+        public string Password { get; }
+
+        /// <summary>
+        /// Sends the SMS.
+        /// </summary>
+        /// <param name="from">Sender name.</param>
+        /// <param name="message">The message.</param>
+        /// <param name="cellphoneNumbers">The cellphone numbers to send the text message (The cellphone number must also include the country code).</param>
+        /// <returns>The API response <see cref="YellowPushSMSResponse"/></returns>
         public YellowPushSMSResponse SendSms(string from, string message, params string[] cellphoneNumbers)
         {
             string to = ConvertParamsToString(cellphoneNumbers, ",");
@@ -49,12 +54,12 @@ namespace YellowPushSMSPackage
         }
 
         /// <summary>
-        /// The method sends the text message
-        /// </summary>      
-        /// <param name="from">Sender name</param>
-        /// <param name="message">Text message</param>
-        /// <param name="cellphoneNumbers">Mobile numbers separated by commas to send the text message (The mobile number must also include the country code)</param>
-        /// <returns></returns>
+        /// Sends the SMS.
+        /// </summary>
+        /// <param name="from">Sender name.</param>
+        /// <param name="message">The message.</param>
+        /// <param name="cellphoneNumbers">The cellphone numbers separated by commas to send the text message (The cellphone number must also include the country code).</param>
+        /// <returns>The API response <see cref="YellowPushSMSResponse"/></returns>
         public YellowPushSMSResponse SendSms(string from, string message, string cellphoneNumbers)
         {
             YellowPushSMSResponse response = SendMessage(from, message, cellphoneNumbers);
@@ -62,11 +67,11 @@ namespace YellowPushSMSPackage
         }
 
         /// <summary>
-        /// The method gets the information about message status
+        /// Gets the message status.
         /// </summary>
-        /// <param name="messsageId">Message identifier</param>
-        /// <param name="sendDate">Date of dispatch the message</param>
-        /// <returns></returns>
+        /// <param name="messsageId">The messsage identifier.</param>
+        /// <param name="sendDate">The send date.</param>
+        /// <returns>The API response <see cref="YellowPushSMSResponse"/></returns>
         public YellowPushSMSResponse GetMessageStatus(string messsageId, DateTime sendDate)
         {
             string token = string.Empty;
@@ -92,19 +97,18 @@ namespace YellowPushSMSPackage
                     ErrorMessage = ex.Message
                 };
             }
-
         }
-        
+
         /// <summary>
-        /// The method gets information data about the Account
+        /// Gets the account.
         /// </summary>
-        /// <param name="username">Username registered in the system</param>
-        /// <param name="password">Password associated with the user in the system</param>
-        /// <returns></returns>
+        /// <param name="username">The username.</param>
+        /// <param name="password">The password.</param>
+        /// <returns>The API response. <see cref="YellowPushSMSResponse"/></returns>
         private IRestResponse<List<Account>> GetAccount(string username, string password)
         {
             RestClient client = new RestClient(Constant.URL_API_REST_ACCOUNT);
-            string credentials = Convert.ToBase64String(Encoding.GetEncoding("ISO-8859-1").GetBytes(username + ":" + password));
+            string credentials = Convert.ToBase64String(Encoding.GetEncoding("ISO-8859-1").GetBytes(string.Format("{0}:{1}", username, password)));
             RestRequest request = new RestRequest(Method.GET);
             request.AddHeader("Authorization", string.Format("Basic {0}", credentials));
             IRestResponse<List<Account>> response = client.Execute<List<Account>>(request);
@@ -113,15 +117,15 @@ namespace YellowPushSMSPackage
         }
 
         /// <summary>
-        /// The method gets token from the API
+        /// Gets the authentication.
         /// </summary>
-        /// <param name="username">Username registered in the system</param>
-        /// <param name="password">Password associated with the user in the system</param>
-        /// <returns></returns>
+        /// <param name="username">The username.</param>
+        /// <param name="password">The password.</param>
+        /// <returns>The API response</returns>
         private IRestResponse<Dictionary<string, string>> GetAuth(string username, string password)
         {
             RestClient client = new RestClient(Constant.URL_API_REST_AUTH);
-            string credentials = Convert.ToBase64String(Encoding.GetEncoding("ISO-8859-1").GetBytes(username + ":" + password));
+            string credentials = Convert.ToBase64String(Encoding.GetEncoding("ISO-8859-1").GetBytes(string.Format("{0}:{1}", username, password)));
             RestRequest request = new RestRequest(Method.GET);
             request.AddHeader("Authorization", string.Format("Basic {0}", credentials));
             IRestResponse<Dictionary<string, string>> response = client.Execute<Dictionary<string, string>>(request);
@@ -130,12 +134,12 @@ namespace YellowPushSMSPackage
         }
 
         /// <summary>
-        /// The method sends the text message
+        /// Sends the message.
         /// </summary>
-        /// <param name="from">The name of the sender</param>
-        /// <param name="message">Text message</param>
-        /// <param name="to">Mobile numbers separated by commas to send the text message (The mobile number must also include the country code)</param>
-        /// <returns></returns>
+        /// <param name="from">Sender name.</param>
+        /// <param name="message">The message.</param>
+        /// <param name="to">The cellphone numbers separated by commas to send the text message (The cellphone number must also include the country code).</param>
+        /// <returns>The API response </returns>
         private YellowPushSMSResponse SendMessage(string from, string message, string to)
         {
             try
@@ -146,7 +150,7 @@ namespace YellowPushSMSPackage
                 IRestResponse<List<Account>> accountResponse = GetAccount(Username, Password);
 
                 if (accountResponse.StatusCode == HttpStatusCode.OK)
-                    acc_id = accountResponse.Data[0].id;
+                    acc_id = accountResponse.Data[0].Id;
                 else
                     return Mapper(accountResponse);
 
@@ -171,14 +175,14 @@ namespace YellowPushSMSPackage
         }
 
         /// <summary>
-        /// The method sends the text message to Alaris API
+        /// Sends the message.
         /// </summary>
-        /// <param name="token">Token generated by the API to authentication</param>
-        /// <param name="acc_id">Account ID (for trusted connection only)</param>
-        /// <param name="to">Mobile numbers separated by commas to send the text message (The mobile number must also include the country code)</param>
-        /// <param name="from">The name of the sender</param>
-        /// <param name="message">Text message</param>
-        /// <returns></returns>
+        /// <param name="token">The token.</param>
+        /// <param name="acc_id">The acc identifier.</param>
+        /// <param name="to">The cellphone numbers separated by commas to send the text message (The cellphone number must also include the country code).</param>
+        /// <param name="from">Sender name.</param>
+        /// <param name="message">The message.</param>
+        /// <returns>The API response</returns>
         private IRestResponse SendMessage(string token, string acc_id, string to, string from, string message)
         {
             RestClient client = new RestClient(Constant.URL_API_REST_SENDSMS);
@@ -193,12 +197,12 @@ namespace YellowPushSMSPackage
         }
 
         /// <summary>
-        /// The method gets the information about message status
+        /// Gets the information about message status.
         /// </summary>
-        /// <param name="token">Token generated by the API to authentication</param>
-        /// <param name="messsageId">Message identifier</param>
-        /// <param name="sendDate">Date of dispatch the message</param>
-        /// <returns></returns>
+        /// <param name="token">The token.</param>
+        /// <param name="messsageId">The messsage identifier.</param>
+        /// <param name="sendDate">The send date.</param>
+        /// <returns>The API response</returns>
         private IRestResponse SmsEdr(string token, string messsageId, DateTime sendDate)
         {
             DateTime startDate = sendDate.AddDays(-1);
@@ -214,10 +218,10 @@ namespace YellowPushSMSPackage
         }
 
         /// <summary>
-        /// The method mapping IRestResponse entity to RestResponse entity
+        /// Mappers the specified rest response.
         /// </summary>
-        /// <param name="restResponse">Type IRestResponse object to map</param>
-        /// <returns></returns>
+        /// <param name="restResponse">The rest response.</param>
+        /// <returns>The YellowPushSMSResponse <see cref="YellowPushSMSResponse"/></returns>
         private YellowPushSMSResponse Mapper(IRestResponse restResponse)
         {
             return new YellowPushSMSResponse(restResponse.Headers)
@@ -239,21 +243,20 @@ namespace YellowPushSMSPackage
         }
 
         /// <summary>
-        /// The method converts string array to string separated by a character
+        /// Converts the parameters to string.
         /// </summary>
-        /// <param name="texstList">String array</param>
-        /// <param name="charcter">Character to separate string array</param>
-        /// <returns></returns>
-        private string ConvertParamsToString(string[] texstList, string charcter)
+        /// <param name="texstList">The texst list.</param>
+        /// <param name="character">The character.</param>
+        /// <returns>The text separated by a character</returns>
+        private string ConvertParamsToString(string[] texstList, string character)
         {
-            string text = string.Empty;
+            StringBuilder text = new StringBuilder();
             foreach (string cell in texstList)
             {
-                text += cell + charcter;
+                text.Append(string.Format("{0}{1}", cell, character));
             }
 
-            text = text.Remove(text.Length - 1);
-            return text;
+            return text.ToString().Remove(text.Length - 1);
         }
     }
 }
