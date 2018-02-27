@@ -15,8 +15,8 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="YellowPushSMS"/> class.
         /// </summary>
-        /// <param name="username">The username.</param>
-        /// <param name="password">The password.</param>
+        /// <param name="username">The username registered in the system.</param>
+        /// <param name="password">The password associated with the user in the system.</param>
         public YellowPushSMS(string username, string password)
         {
             this.Username = username;
