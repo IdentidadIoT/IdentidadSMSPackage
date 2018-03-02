@@ -4,7 +4,8 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
-    using System.Text;    
+    using System.Text;
+    using Newtonsoft.Json;
     using RestSharp;
     using YellowPushSMSPackage.Models;
 
@@ -12,7 +13,7 @@
     /// YellowPushSMS Class
     /// </summary>
     public class YellowPushSMS
-    {   
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="YellowPushSMS"/> class.
         /// </summary>
@@ -47,7 +48,7 @@
         /// <param name="message">The message.</param>
         /// <param name="cellphoneNumbers">The cellphone numbers to send the text message (The cellphone number must also include the country code).</param>
         /// <returns>The API response <see cref="YellowPushSMSResponse"/></returns>
-        public YellowPushSMSResponse SendSms(string from, string message, params string[] cellphoneNumbers)
+        public YellowPushSMSResponse SendSMS(string from, string message, params string[] cellphoneNumbers)
         {
             string to = ConvertParamsToString(cellphoneNumbers, ",");
             YellowPushSMSResponse response = SendMessage(from, message, to);
@@ -61,10 +62,49 @@
         /// <param name="message">The message.</param>
         /// <param name="cellphoneNumbers">The cellphone numbers separated by commas to send the text message (The cellphone number must also include the country code).</param>
         /// <returns>The API response <see cref="YellowPushSMSResponse"/></returns>
-        public YellowPushSMSResponse SendSms(string from, string message, string cellphoneNumbers)
+        public YellowPushSMSResponse SendSMS(string from, string message, string cellphoneNumbers)
         {
             YellowPushSMSResponse response = SendMessage(from, message, cellphoneNumbers);
             return response;
+        }
+
+        /// <summary>
+        /// Bulks the send SMS.
+        /// </summary>
+        /// <param name="listMessages">The list messages.</param>
+        /// <returns>The API response <see cref="YellowPushSMSResponse"/></returns>
+        public YellowPushSMSResponse BulkSendSMS(List<BulkSMS> listMessages)
+        {
+            try
+            {
+                string acc_id = string.Empty;
+                string token = string.Empty;
+
+                IRestResponse<List<Account>> accountResponse = GetAccount(Username, Password);
+
+                if (accountResponse.StatusCode == HttpStatusCode.OK)
+                    acc_id = accountResponse.Data.FirstOrDefault().Id;
+                else
+                    return Mapper(accountResponse);
+
+                IRestResponse<Dictionary<string, string>> authResponse = GetAuth(Username, Password);
+
+                if (authResponse.StatusCode == HttpStatusCode.OK)
+                    token = authResponse.Data["token"];
+                else
+                    return Mapper(authResponse);
+
+                IRestResponse sendResponse = BulkSendMessage(listMessages, token, acc_id);
+                return Mapper(sendResponse);
+            }
+            catch (Exception ex)
+            {
+                return new YellowPushSMSResponse
+                {
+                    StatusCode = HttpStatusCode.InternalServerError,
+                    ErrorMessage = ex.Message
+                };
+            }
         }
 
         /// <summary>
@@ -198,6 +238,30 @@
         }
 
         /// <summary>
+        /// Bulks send message.
+        /// </summary>
+        /// <param name="listMessages">The list messages.</param>
+        /// <param name="token">The token.</param>
+        /// <param name="acc_id">The acc identifier.</param>
+        /// <returns>The API response</returns>
+        private IRestResponse BulkSendMessage(List<BulkSMS> listMessages, string token, string acc_id)
+        {
+            string baseUrl = $@"{Constant.URL_API_REST_BULKSENDSMS}?acc_id={acc_id}";
+
+            var client = new RestClient(baseUrl);
+            var request = new RestRequest(Method.POST);
+            request.AddHeader("Authorization", $@"Bearer {token}");
+            request.AddHeader("Content-Type", "application/json");
+
+            string json = JsonConvert.SerializeObject(listMessages);
+
+            request.AddParameter("undefined", json, ParameterType.RequestBody);
+            IRestResponse response = client.Execute(request);
+
+            return response;
+        }
+
+        /// <summary>
         /// Gets the information about message status.
         /// </summary>
         /// <param name="token">The token.</param>
@@ -257,7 +321,7 @@
             {
                 text.Append($@"{cell}{character}");
             });
-            
+
             return text.ToString().Remove(text.Length - 1);
         }
     }
