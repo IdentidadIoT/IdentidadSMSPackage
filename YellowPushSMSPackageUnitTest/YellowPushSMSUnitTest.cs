@@ -36,13 +36,16 @@
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode, $@"El status code de la respuesta del mensaje es {response.StatusCode.ToString()}");
         }
 
+        /// <summary>
+        /// Bulks the send SMS.
+        /// </summary>
         [TestMethod]
         public void BulkSendSMS()
         {
             List<BulkSMS> messages = new List<BulkSMS>()
             {
-                new BulkSMS() { From = "Damian", CellphoneNumber = "573163985157", Message = "Prueba desde Test Unitario Bulk Damian" },
-                new BulkSMS() { From = "Jose", CellphoneNumber = "573175564608", Message = "Prueba desde Test Unitario Bulk Jose" }
+                new BulkSMS() { From = "Damian", MobileNumber = "573163985157", Message = "Prueba desde Test Unitario Bulk Damian" },
+                new BulkSMS() { From = "Jose", MobileNumber = "573175564608", Message = "Prueba desde Test Unitario Bulk Jose" }
             };
 
             YellowPushSMSResponse response = sms.BulkSendSMS(messages);

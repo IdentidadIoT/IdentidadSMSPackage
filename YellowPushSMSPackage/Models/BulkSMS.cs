@@ -17,13 +17,13 @@
         public string From { get; set; }
 
         /// <summary>
-        /// Gets or sets CellphoneNumber.
+        /// Gets or sets the mobile number.
         /// </summary>
         /// <value>
-        /// The CellphoneNumber.
+        /// The mobile number.
         /// </value>
         [JsonProperty("to")]
-        public string CellphoneNumber { get; set; }
+        public string MobileNumber { get; set; }
 
         /// <summary>
         /// Gets or sets the message.

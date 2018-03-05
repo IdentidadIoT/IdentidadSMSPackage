@@ -46,11 +46,11 @@
         /// </summary>
         /// <param name="from">Sender name.</param>
         /// <param name="message">The message.</param>
-        /// <param name="cellphoneNumbers">The cellphone numbers to send the text message (The cellphone number must also include the country code).</param>
+        /// <param name="mobileNumbers">The mobile numbers to send the text message (The mobile number must also include the country code).</param>
         /// <returns>The API response <see cref="YellowPushSMSResponse"/></returns>
-        public YellowPushSMSResponse SendSMS(string from, string message, params string[] cellphoneNumbers)
+        public YellowPushSMSResponse SendSMS(string from, string message, params string[] mobileNumbers)
         {
-            string to = ConvertParamsToString(cellphoneNumbers, ",");
+            string to = ConvertParamsToString(mobileNumbers, ",");
             YellowPushSMSResponse response = SendMessage(from, message, to);
             return response;
         }
@@ -60,11 +60,11 @@
         /// </summary>
         /// <param name="from">Sender name.</param>
         /// <param name="message">The message.</param>
-        /// <param name="cellphoneNumbers">The cellphone numbers separated by commas to send the text message (The cellphone number must also include the country code).</param>
+        /// <param name="mobileNumbers">The mobile numbers separated by commas to send the text message (The mobile number must also include the country code).</param>
         /// <returns>The API response <see cref="YellowPushSMSResponse"/></returns>
-        public YellowPushSMSResponse SendSMS(string from, string message, string cellphoneNumbers)
+        public YellowPushSMSResponse SendSMS(string from, string message, string mobileNumbers)
         {
-            YellowPushSMSResponse response = SendMessage(from, message, cellphoneNumbers);
+            YellowPushSMSResponse response = SendMessage(from, message, mobileNumbers);
             return response;
         }
 
@@ -102,7 +102,8 @@
                 return new YellowPushSMSResponse
                 {
                     StatusCode = HttpStatusCode.InternalServerError,
-                    ErrorMessage = ex.Message
+                    HasError = true,
+                    Error = ex.Message
                 };
             }
         }
@@ -135,7 +136,8 @@
                 return new YellowPushSMSResponse
                 {
                     StatusCode = HttpStatusCode.InternalServerError,
-                    ErrorMessage = ex.Message
+                    HasError = true,
+                    Error = ex.Message
                 };
             }
         }
@@ -210,7 +212,8 @@
                 return new YellowPushSMSResponse
                 {
                     StatusCode = HttpStatusCode.InternalServerError,
-                    ErrorMessage = ex.Message
+                    HasError = true,
+                    Error = ex.Message
                 };
             }
         }
@@ -238,15 +241,17 @@
         }
 
         /// <summary>
-        /// Bulks send message.
+        /// Bulks the send message.
         /// </summary>
         /// <param name="listMessages">The list messages.</param>
         /// <param name="token">The token.</param>
         /// <param name="acc_id">The acc identifier.</param>
+        /// <param name="details">if set to <c>true</c> [details].</param>
         /// <returns>The API response</returns>
-        private IRestResponse BulkSendMessage(List<BulkSMS> listMessages, string token, string acc_id)
+        private IRestResponse BulkSendMessage(List<BulkSMS> listMessages, string token, string acc_id, bool details = false)
         {
-            string baseUrl = $@"{Constant.URL_API_REST_BULKSENDSMS}?acc_id={acc_id}";
+            int showDetails = details ? 1 : 0;
+            string baseUrl = $@"{Constant.URL_API_REST_BULKSENDSMS}?acc_id={acc_id}&show_details={showDetails}";
 
             var client = new RestClient(baseUrl);
             var request = new RestRequest(Method.POST);
@@ -289,22 +294,12 @@
         /// <returns>The YellowPushSMSResponse <see cref="YellowPushSMSResponse"/></returns>
         private YellowPushSMSResponse Mapper(IRestResponse restResponse)
         {
-            return new YellowPushSMSResponse(restResponse.IsSuccessful, restResponse.Headers)
+            return new YellowPushSMSResponse()
             {
                 Content = restResponse.Content,
-                ContentEncoding = restResponse.ContentEncoding,
-                ContentLength = restResponse.ContentLength,
-                ContentType = restResponse.ContentType,
-                ErrorException = restResponse.ErrorException,
-                ProtocolVersion = restResponse.ProtocolVersion,
-                ErrorMessage = restResponse.ErrorMessage,
-                RawBytes = restResponse.RawBytes,
-                Request = restResponse.Request,
-                ResponseStatus = restResponse.ResponseStatus,
-                ResponseUri = restResponse.ResponseUri,
-                Server = restResponse.Server,
+                Error = restResponse.ErrorMessage,
                 StatusCode = restResponse.StatusCode,
-                StatusDescription = restResponse.StatusDescription
+                HasError = restResponse.StatusCode == HttpStatusCode.OK ? false : true
             };
         }
 

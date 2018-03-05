@@ -1,73 +1,12 @@
 ﻿namespace YellowPushSMSPackage.Models
 {
-    using System;
-    using System.Collections.Generic;
     using System.Net;
-    using RestSharp;
 
     /// <summary>
     /// Object Response
     /// </summary>
-    public class YellowPushSMSResponse : IRestResponse
+    public class YellowPushSMSResponse
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="YellowPushSMSResponse"/> class.
-        /// </summary>
-        public YellowPushSMSResponse()
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="YellowPushSMSResponse"/> class.
-        /// </summary>
-        /// <param name="isSuccessful">if set to <c>true</c> [is successful].</param>
-        /// <param name="headers">The headers.</param>
-        public YellowPushSMSResponse(bool isSuccessful, IList<Parameter> headers)
-        {
-            IsSuccessful = isSuccessful;
-            Headers = headers;
-        }
-
-        /// <summary>
-        /// Gets or sets my property.
-        /// </summary>
-        /// <value>
-        /// My property.
-        /// </value>
-        public int MyProperty { get; set; }
-
-        /// <summary>
-        /// Gets or sets the request.
-        /// </summary>
-        /// <value>
-        /// The request.
-        /// </value>
-        public IRestRequest Request { get; set; }
-
-        /// <summary>
-        /// Gets or sets the type of the content.
-        /// </summary>
-        /// <value>
-        /// The type of the content.
-        /// </value>
-        public string ContentType { get; set; }
-
-        /// <summary>
-        /// Gets or sets the length of the content.
-        /// </summary>
-        /// <value>
-        /// The length of the content.
-        /// </value>
-        public long ContentLength { get; set; }
-
-        /// <summary>
-        /// Gets or sets the content encoding.
-        /// </summary>
-        /// <value>
-        /// The content encoding.
-        /// </value>
-        public string ContentEncoding { get; set; }
-
         /// <summary>
         /// Gets or sets the content.
         /// </summary>
@@ -85,68 +24,12 @@
         public HttpStatusCode StatusCode { get; set; }
 
         /// <summary>
-        /// Gets a value indicating whether this instance is successful.
+        /// Gets or sets a value indicating whether this instance has error.
         /// </summary>
         /// <value>
-        ///   <c>true</c> if this instance is successful; otherwise, <c>false</c>.
+        ///   <c>true</c> if this instance has error; otherwise, <c>false</c>.
         /// </value>
-        public bool IsSuccessful { get; }
-
-        /// <summary>
-        /// Gets or sets the status description.
-        /// </summary>
-        /// <value>
-        /// The status description.
-        /// </value>
-        public string StatusDescription { get; set; }
-
-        /// <summary>
-        /// Gets or sets the raw bytes.
-        /// </summary>
-        /// <value>
-        /// The raw bytes.
-        /// </value>
-        public byte[] RawBytes { get; set; }
-
-        /// <summary>
-        /// Gets or sets the response URI.
-        /// </summary>
-        /// <value>
-        /// The response URI.
-        /// </value>
-        public Uri ResponseUri { get; set; }
-
-        /// <summary>
-        /// Gets or sets the server.
-        /// </summary>
-        /// <value>
-        /// The server.
-        /// </value>
-        public string Server { get; set; }
-
-        /// <summary>
-        /// Gets the cookies.
-        /// </summary>
-        /// <value>
-        /// The cookies.
-        /// </value>
-        public IList<RestResponseCookie> Cookies { get; }
-
-        /// <summary>
-        /// Gets the headers.
-        /// </summary>
-        /// <value>
-        /// The headers.
-        /// </value>
-        public IList<Parameter> Headers { get; }
-
-        /// <summary>
-        /// Gets or sets the response status.
-        /// </summary>
-        /// <value>
-        /// The response status.
-        /// </value>
-        public ResponseStatus ResponseStatus { get; set; }
+        public bool HasError { get; set; }
 
         /// <summary>
         /// Gets or sets the error message.
@@ -154,22 +37,6 @@
         /// <value>
         /// The error message.
         /// </value>
-        public string ErrorMessage { get; set; }
-
-        /// <summary>
-        /// Gets or sets the error exception.
-        /// </summary>
-        /// <value>
-        /// The error exception.
-        /// </value>
-        public Exception ErrorException { get; set; }
-
-        /// <summary>
-        /// Gets or sets the protocol version.
-        /// </summary>
-        /// <value>
-        /// The protocol version.
-        /// </value>
-        public Version ProtocolVersion { get; set; }
+        public string Error { get; set; }
     }
 }
