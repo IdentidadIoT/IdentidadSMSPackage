@@ -21,6 +21,11 @@
         public const string URL_API_REST_SENDSMS = "https://api.identidadsms.net/rest/send_sms";
 
         /// <summary>
+        /// The URL API rest bulksendsms
+        /// </summary>
+        public const string URL_API_REST_BULKSENDSMS = "https://api.identidadsms.net/rest/bulk_send_sms";
+
+        /// <summary>
         /// The URL API rest smsedr
         /// </summary>
         public const string URL_API_REST_SMSEDR = "https://api.identidadsms.net/rest/sms_edr";

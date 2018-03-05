@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Net;
     using System.Text;
+    using Newtonsoft.Json;
     using RestSharp;
     using YellowPushSMSPackage.Models;
 
@@ -44,11 +45,11 @@
         /// </summary>
         /// <param name="from">Sender name.</param>
         /// <param name="message">The message.</param>
-        /// <param name="cellphoneNumbers">The cellphone numbers to send the text message (The cellphone number must also include the country code).</param>
+        /// <param name="mobileNumbers">The mobile numbers to send the text message (The mobile number must also include the country code).</param>
         /// <returns>The API response <see cref="YellowPushSMSResponse"/></returns>
-        public YellowPushSMSResponse SendSms(string from, string message, params string[] cellphoneNumbers)
+        public YellowPushSMSResponse SendSMS(string from, string message, params string[] mobileNumbers)
         {
-            string to = ConvertParamsToString(cellphoneNumbers, ",");
+            string to = ConvertParamsToString(mobileNumbers, ",");
             YellowPushSMSResponse response = SendMessage(from, message, to);
             return response;
         }
@@ -58,12 +59,52 @@
         /// </summary>
         /// <param name="from">Sender name.</param>
         /// <param name="message">The message.</param>
-        /// <param name="cellphoneNumbers">The cellphone numbers separated by commas to send the text message (The cellphone number must also include the country code).</param>
+        /// <param name="mobileNumbers">The mobile numbers separated by commas to send the text message (The mobile number must also include the country code).</param>
         /// <returns>The API response <see cref="YellowPushSMSResponse"/></returns>
-        public YellowPushSMSResponse SendSms(string from, string message, string cellphoneNumbers)
+        public YellowPushSMSResponse SendSMS(string from, string message, string mobileNumbers)  
         {
-            YellowPushSMSResponse response = SendMessage(from, message, cellphoneNumbers);
+            YellowPushSMSResponse response = SendMessage(from, message, mobileNumbers);
             return response;
+        }
+
+        /// <summary>
+        /// Bulks the send SMS.
+        /// </summary>
+        /// <param name="listMessages">The list messages.</param>
+        /// <returns>The API response <see cref="YellowPushSMSResponse"/></returns>
+        public YellowPushSMSResponse BulkSendSMS(List<BulkSMS> listMessages)
+        {
+            try
+            {
+                string acc_id = string.Empty;
+                string token = string.Empty;
+
+                IRestResponse<List<Account>> accountResponse = GetAccount(Username, Password);
+
+                if (accountResponse.StatusCode == HttpStatusCode.OK)
+                    acc_id = accountResponse.Data[0].Id;
+                else
+                    return Mapper(accountResponse);
+
+                IRestResponse<Dictionary<string, string>> authResponse = GetAuth(Username, Password);
+
+                if (authResponse.StatusCode == HttpStatusCode.OK)
+                    token = authResponse.Data["token"];
+                else
+                    return Mapper(authResponse);
+
+                IRestResponse sendResponse = BulkSendMessage(listMessages, token, acc_id, true);
+                return Mapper(sendResponse);
+            }
+            catch (Exception ex)
+            {
+                return new YellowPushSMSResponse
+                {
+                    StatusCode = HttpStatusCode.InternalServerError,
+                    HasError = true,
+                    Error = ex.Message
+                };
+            }
         }
 
         /// <summary>
@@ -94,7 +135,8 @@
                 return new YellowPushSMSResponse
                 {
                     StatusCode = HttpStatusCode.InternalServerError,
-                    ErrorMessage = ex.Message
+                    HasError = true,
+                    Error = ex.Message
                 };
             }
         }
@@ -169,7 +211,8 @@
                 return new YellowPushSMSResponse
                 {
                     StatusCode = HttpStatusCode.InternalServerError,
-                    ErrorMessage = ex.Message
+                    HasError = true,
+                    Error = ex.Message
                 };
             }
         }
@@ -191,6 +234,32 @@
             request.AddHeader("authorization", $@"Bearer {token}");
             string postData = string.Format("acc_id={0}&to={1}&from={2}&message={3}", acc_id, to, from, message);
             request.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
+            IRestResponse response = client.Execute(request);
+
+            return response;
+        }
+
+        /// <summary>
+        /// Bulks the send message.
+        /// </summary>
+        /// <param name="listMessages">The list messages.</param>
+        /// <param name="token">The token.</param>
+        /// <param name="acc_id">The acc identifier.</param>
+        /// <param name="details">if set to <c>true</c> [details].</param>
+        /// <returns>The API response</returns>
+        private IRestResponse BulkSendMessage(List<BulkSMS> listMessages, string token, string acc_id, bool details = false)
+        {
+            int showDetails = details ? 1 : 0;
+            string baseUrl = $@"{Constant.URL_API_REST_BULKSENDSMS}?acc_id={acc_id}&show_details={showDetails}";
+
+            var client = new RestClient(baseUrl);
+            var request = new RestRequest(Method.POST);
+            request.AddHeader("Authorization", $@"Bearer {token}");
+            request.AddHeader("Content-Type", "application/json");
+
+            string json = JsonConvert.SerializeObject(listMessages, Formatting.Indented);
+
+            request.AddParameter("application/json", json, ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
 
             return response;
@@ -224,21 +293,12 @@
         /// <returns>The YellowPushSMSResponse <see cref="YellowPushSMSResponse"/></returns>
         private YellowPushSMSResponse Mapper(IRestResponse restResponse)
         {
-            return new YellowPushSMSResponse(restResponse.Headers)
+            return new YellowPushSMSResponse()
             {
                 Content = restResponse.Content,
-                ContentEncoding = restResponse.ContentEncoding,
-                ContentLength = restResponse.ContentLength,
-                ContentType = restResponse.ContentType,
-                ErrorException = restResponse.ErrorException,
-                ErrorMessage = restResponse.ErrorMessage,
-                RawBytes = restResponse.RawBytes,
-                Request = restResponse.Request,
-                ResponseStatus = restResponse.ResponseStatus,
-                ResponseUri = restResponse.ResponseUri,
-                Server = restResponse.Server,
+                Error = restResponse.ErrorMessage,
                 StatusCode = restResponse.StatusCode,
-                StatusDescription = restResponse.StatusDescription
+                HasError = restResponse.StatusCode == HttpStatusCode.OK ? false : true
             };
         }
 

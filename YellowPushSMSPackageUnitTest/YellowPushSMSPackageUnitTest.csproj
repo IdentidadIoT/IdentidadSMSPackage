@@ -51,9 +51,8 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
-    <Reference Include="YellowPushSMS, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\YellowPushSMSPackage\bin\Release\YellowPushSMS.dll</HintPath>
+    <Reference Include="YellowPushSMS">
+      <HintPath>..\YellowPushSMSPackage\bin\Debug\YellowPushSMS.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
