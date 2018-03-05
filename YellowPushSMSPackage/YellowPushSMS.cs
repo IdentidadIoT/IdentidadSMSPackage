@@ -250,7 +250,7 @@
         private IRestResponse BulkSendMessage(List<BulkSMS> listMessages, string token, string acc_id, bool details = false)
         {
             int showDetails = details ? 1 : 0;
-            string baseUrl = $@"{Constant.URL_API_REST_BULKSENDSMS}?acc_id={acc_id}&show_details={showDetails}";
+            string baseUrl = string.Format("{0}?acc_id={1}&show_details={2}", Constant.URL_API_REST_BULKSENDSMS, acc_id, showDetails);
 
             var client = new RestClient(baseUrl);
             var request = new RestRequest(Method.POST);

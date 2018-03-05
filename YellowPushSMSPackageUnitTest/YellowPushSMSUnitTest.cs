@@ -45,8 +45,8 @@
         {
             List<BulkSMS> messages = new List<BulkSMS>()
             {
-                new BulkSMS() { From = "Damian", MobileNumbers = "573163985157", Message = "Prueba desde Test Unitario Bulk Damian" },
-                new BulkSMS() { From = "Jose", MobileNumbers = "573175564608", Message = "Prueba desde Test Unitario Bulk Jose" }
+                new BulkSMS() { From = "Damian", MobileNumber = "573163985157", Message = "Prueba desde Test Unitario Bulk Damian" },
+                new BulkSMS() { From = "Jose", MobileNumber = "573175564608", Message = "Prueba desde Test Unitario Bulk Jose" }
             };
 
             YellowPushSMSResponse response = sms.BulkSendSMS(messages);
