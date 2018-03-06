@@ -94,7 +94,7 @@
                 else
                     return Mapper(authResponse);
 
-                IRestResponse sendResponse = BulkSendMessage(listMessages, token, acc_id);
+                IRestResponse sendResponse = BulkSendMessage(listMessages, token, acc_id, true);
                 return Mapper(sendResponse);
             }
             catch (Exception ex)
