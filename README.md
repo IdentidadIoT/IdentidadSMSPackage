@@ -40,8 +40,8 @@ YellowPushSMS sms = new YellowPushSMS("username", "password");
 
 List<BulkSMS> lstMessages = new List<BulkSMS>()
 {
-    new BulkSMS() { From = "from", Message = "Message One", MobileNumber = "xxxxxxxxxxxx"},
-    new BulkSMS() { From = "from", Message = "Message Two", MobileNumber = "xxxxxxxxxxxx"}
+    new BulkSMS() { From = "from", Message = "Message One", MobileNumber = "mobileNumberOne"},
+    new BulkSMS() { From = "from", Message = "Message Two", MobileNumber = "mobileNumberTwo"}
 };
 
 YellowPushSMSResponse response = sms.BulkSendSMS(lstMessages);
@@ -56,6 +56,6 @@ using YellowPushSMSPackage;
 using YellowPushSMSPackage.Models;
 
 YellowPushSMS sms = new YellowPushSMS("username", "password");
-YellowPushSMSResponse response = sms.GetMessageStatus("5a5600d4-e8fb-6db2-0815", new System.DateTime(2018, 3, 1));
+YellowPushSMSResponse response = sms.GetMessageStatus("messsageId", new System.DateTime(2018, 3, 1));
 
 ```
