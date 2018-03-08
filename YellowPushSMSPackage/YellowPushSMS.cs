@@ -21,8 +21,21 @@
         /// <param name="password">The password associated with the user in the system.</param>
         public YellowPushSMS(string username, string password)
         {
-            this.Username = username;
-            this.Password = password;
+            Username = username;
+            Password = password;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="YellowPushSMS"/> class.
+        /// </summary>
+        /// <param name="username">The username registered in the system.</param>
+        /// <param name="password">The password associated with the user in the system.</param>
+        /// <param name="accountId">The account identifier.</param>
+        public YellowPushSMS(string username, string password, string accountId)
+        {
+            Username = username;
+            Password = password;
+            AccountId = accountId;
         }
 
         /// <summary>
@@ -40,6 +53,14 @@
         /// The password.
         /// </value>
         public string Password { get; }
+
+        /// <summary>
+        /// Gets or sets the account identifier.
+        /// </summary>
+        /// <value>
+        /// The account identifier.
+        /// </value>
+        public string AccountId { get; set; }
 
         /// <summary>
         /// Sends the SMS.
@@ -77,15 +98,17 @@
         {
             try
             {
-                string acc_id = string.Empty;
                 string token = string.Empty;
 
-                IRestResponse<List<Account>> accountResponse = GetAccount(Username, Password);
+                if (string.IsNullOrEmpty(AccountId))
+                {
+                    IRestResponse<List<Account>> accountResponse = GetAccount(Username, Password);
 
-                if (accountResponse.StatusCode == HttpStatusCode.OK)
-                    acc_id = accountResponse.Data.FirstOrDefault().Id;
-                else
-                    return Mapper(accountResponse);
+                    if (accountResponse.StatusCode == HttpStatusCode.OK)
+                        AccountId = accountResponse.Data.FirstOrDefault().Id;
+                    else
+                        return Mapper(accountResponse);
+                }
 
                 IRestResponse<Dictionary<string, string>> authResponse = GetAuth(Username, Password);
 
@@ -94,7 +117,7 @@
                 else
                     return Mapper(authResponse);
 
-                IRestResponse sendResponse = BulkSendMessage(listMessages, token, acc_id, true);
+                IRestResponse sendResponse = BulkSendMessage(listMessages, token, AccountId, true);
                 return Mapper(sendResponse);
             }
             catch (Exception ex)
@@ -187,15 +210,17 @@
         {
             try
             {
-                string acc_id = string.Empty;
                 string token = string.Empty;
 
-                IRestResponse<List<Account>> accountResponse = GetAccount(Username, Password);
+                if (string.IsNullOrEmpty(AccountId))
+                {
+                    IRestResponse<List<Account>> accountResponse = GetAccount(Username, Password);
 
-                if (accountResponse.StatusCode == HttpStatusCode.OK)
-                    acc_id = accountResponse.Data.FirstOrDefault().Id;
-                else
-                    return Mapper(accountResponse);
+                    if (accountResponse.StatusCode == HttpStatusCode.OK)
+                        AccountId = accountResponse.Data.FirstOrDefault().Id;
+                    else
+                        return Mapper(accountResponse);
+                }
 
                 IRestResponse<Dictionary<string, string>> authResponse = GetAuth(Username, Password);
 
@@ -204,7 +229,7 @@
                 else
                     return Mapper(authResponse);
 
-                IRestResponse sendResponse = SendMessage(token, acc_id, to, from, message);
+                IRestResponse sendResponse = SendMessage(token, AccountId, to, from, message);
                 return Mapper(sendResponse);
             }
             catch (Exception ex)
