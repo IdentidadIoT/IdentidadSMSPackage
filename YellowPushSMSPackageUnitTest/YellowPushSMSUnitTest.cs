@@ -24,6 +24,7 @@
         public YellowPushSMSUnitTest()
         {
             sms = new YellowPushSMS("achavez@identidadiot.com", "1d3nt1d@d");
+            //sms = new YellowPushSMS("achavez@identidadiot.com", "1d3nt1d@d", "10278");
         }
 
         /// <summary>
