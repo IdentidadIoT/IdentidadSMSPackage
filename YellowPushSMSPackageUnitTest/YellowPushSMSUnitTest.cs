@@ -23,8 +23,8 @@
         /// </summary>
         public YellowPushSMSUnitTest()
         {
-            sms = new YellowPushSMS("achavez@identidadiot.com", "1d3nt1d@d");
-            //sms = new YellowPushSMS("achavez@identidadiot.com", "1d3nt1d@d", "10278");
+            //sms = new YellowPushSMS("achavez@identidadiot.com", "Id3nt1d@d5m5");
+            sms = new YellowPushSMS("achavez@identidadiot.com", "Id3nt1d@d5m5", "10278");
         }
 
         /// <summary>
@@ -33,7 +33,7 @@
         [TestMethod]
         public void SendSMS()
         {
-            YellowPushSMSResponse response = sms.SendSMS("Damian", "Esto es una prueba desde Test Unitario", "573163985157");
+            YellowPushSMSResponse response = sms.SendSMS("Damian", "EL 20% hombres & mujeres (Otros)", "573163985157");
             string error = string.Format("El status code de la respuesta del mensaje es {0}", response.StatusCode.ToString());
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode, error);
         }
@@ -46,8 +46,8 @@
         {
             List<BulkSMS> messages = new List<BulkSMS>()
             {
-                new BulkSMS() { From = "Damian", MobileNumber = "573163985157", Message = "Prueba desde Test Unitario Bulk Damian" },
-                new BulkSMS() { From = "Jose", MobileNumber = "573175564608", Message = "Prueba desde Test Unitario Bulk Jose" }
+                new BulkSMS() { From = "Damian", MobileNumber = "573163985157", Message = "Prueba desde Test Unitario Bulk Damian 20%" },
+                new BulkSMS() { From = "Jose", MobileNumber = "573175564608", Message = "Prueba desde Test Unitario Bulk Jose 20%" }
             };
 
             YellowPushSMSResponse response = sms.BulkSendSMS(messages);

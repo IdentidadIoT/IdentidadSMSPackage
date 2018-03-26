@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Net;
     using System.Text;
+    using System.Web;
     using Newtonsoft.Json;
     using RestSharp;
     using YellowPushSMSPackage.Models;
@@ -257,7 +258,7 @@
             RestRequest request = new RestRequest(Method.POST);
             request.AddHeader("content-type", "application/x-www-form-urlencoded");
             request.AddHeader("authorization", $@"Bearer {token}");
-            string postData = string.Format("acc_id={0}&to={1}&from={2}&message={3}", acc_id, to, from, message);
+            string postData = string.Format("acc_id={0}&to={1}&from={2}&message={3}", acc_id, to, from, HttpUtility.UrlEncode(message));
             request.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
 
@@ -342,6 +343,6 @@
             }
 
             return text.ToString().Remove(text.Length - 1);
-        }
+        }        
     }
 }
