@@ -23,8 +23,8 @@
         /// </summary>
         public YellowPushSMSUnitTest()
         {
-            ////sms = new YellowPushSMS("achavez@identidadiot.com", "1d3nt1d@d");
-            sms = new YellowPushSMS("achavez@identidadiot.com", "1d3nt1d@d", "10278");
+            ////sms = new YellowPushSMS("achavez@identidadiot.com", "Id3nt1d@d5m5");
+            sms = new YellowPushSMS("achavez@identidadiot.com", "Id3nt1d@d5m5", "10278");
         }
 
         /// <summary>
@@ -33,7 +33,7 @@
         [TestMethod]
         public void SendSMS()
         {
-            YellowPushSMSResponse response = sms.SendSMS("Damian", "Esto es una prueba desde Test Unitario", "573163985157");
+            YellowPushSMSResponse response = sms.SendSMS("Damian", "Esto es una prueba desde Test Unitario 20%", "573163985157");
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode, $@"El status code de la respuesta del mensaje es {response.StatusCode.ToString()}");
         }
 
